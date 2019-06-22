@@ -1,0 +1,15 @@
+[
+    {
+        "qty": "1",
+        "unit": "pound",
+        "name": "carrots",
+        "display": "<span class='qty'>1</span><span class='unit'>pound</span><span class='name'>carrots</span>",
+        "input": "1 pound carrots"
+    },
+    {
+        "qty": "22",
+        "name": "lbs horseradish",
+        "display": "<span class='qty'>22</span><span class='name'>lbs horseradish</span>",
+        "input": "22 lbs horseradish"
+    }
+]
