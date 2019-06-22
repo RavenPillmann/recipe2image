@@ -7,7 +7,7 @@ import json
 import logging
 import threading
 
-import utils.formatters as formatters
+import formatters
 
 BASE_URL = 'https://api.edamam.com/search'
 
@@ -116,7 +116,7 @@ def main():
 	args = vars(args)
 
 	# queryAndStore(args['APIKey'], args['APIId'], args['Keyword'])
-	print(formatters.parseIngredient('2 ounces dry roasted cherries-davp'))
+	print(formatters.parseIngredient(['2 ounces dry roasted cherries']))
 
 	# arr = ['hello', 'I', 'am', 'a', 'man']
 	# thread_1 = threading.Thread(target=printAndDelete, args=(arr,))
