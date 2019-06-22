@@ -5,7 +5,7 @@ Goal: Use a DCGAN to create images of recipes
 - Recipe api to query https://developer.edamam.com/edamam-recipe-api-demo
 
 ## TODO:
-- [] Write API query-er
+- [ ] Write API query-er
 - [X] Get NYT ingredient parser working, process ingredient data
-- [] Run data collection, store in GCP
-- [] Build DCGAN to create images
+- [ ] Run data collection, store in GCP
+- [ ] Build DCGAN to create images
