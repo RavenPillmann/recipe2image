@@ -25,8 +25,8 @@ def urlBuilder(api_key, api_id, keyword):
 
 	url += 'app_id=' + str(api_id) + '&'
 	url += 'app_key=' + str(api_key) + '&'
-	url += 'q=' + str(keyword)
-	url += 'from=0&to=100'
+	url += 'q=' + str(keyword) + '&'
+	url += 'from=0&to=10'
 
 	return url
 
@@ -67,19 +67,22 @@ def postprocessData(data):
 	# TODO: parse the ingredients, put parsed information into ingredients
 	json_data = json.loads(data)
 
-	recipes_with_individual_ingredients = list(filter(lambda x: 'food' in x['recipe']['ingredients'][0], json_data['hits']))
+	# recipes_with_individual_ingredients = list(filter(lambda x: 'food' in x['recipe']['ingredients'][0], json_data['hits']))
 	for hit in json_data['hits']:
 		recipe = hit['recipe']
 
 		for ingredient in recipe['ingredients']:
-			if food not in ingredient:
+			if 'food' not in ingredient:
 				text = ingredient['text']
 
-				parsed_text = formatters.parseIngredient(text)
-				ingredient['food'] = parsed_text['']
+				parsed_text = eval(formatters.parseIngredient([text]))[0]
+				# print("parsed_text", parsed_text)
+				ingredient['food'] = parsed_text.get('name')
+				ingredient['unit'] = parsed_text.get('unit')
+				ingredient['qty'] = parsed_text.get('qty')
 
 
-	return recipes_with_individual_ingredients
+	return json_data
 
 
 def queryAndStore(api_key, api_id, keyword):
@@ -91,20 +94,14 @@ def queryAndStore(api_key, api_id, keyword):
 	"""
 	res = query(api_key, api_id, keyword)
 
+	recipes_with_individual_ingredients = res
+
 	if len(res) > 0:
 		recipes_with_individual_ingredients = postprocessData(res)
-		# print(len(recipes_with_individual_ingredients))
+
+	return recipes_with_individual_ingredients
 
 
-# def printAndDelete(arr):
-# 	while len(arr) > 0:
-# 		print(arr.pop(0))
-
-
-# TODO: multithread
-# Keep queue of things to query by appearances so far
-# Keep a dictionary of term: isQueried to ensure I don't get the same stuff over and over
-# Use the url to recipe to not save the same thing twice
 def main():
 	parser = argparse.ArgumentParser(description="Query the EDAMAM recipe api.")
 
@@ -115,20 +112,9 @@ def main():
 	args = parser.parse_args()
 	args = vars(args)
 
-	# queryAndStore(args['APIKey'], args['APIId'], args['Keyword'])
-	print(formatters.parseIngredient(['2 ounces dry roasted cherries']))
-
-	# arr = ['hello', 'I', 'am', 'a', 'man']
-	# thread_1 = threading.Thread(target=printAndDelete, args=(arr,))
-	# thread_2 = threading.Thread(target=printAndDelete, args=(arr,))
-
-	# thread_1.start()
-	# thread_2.start()
-
-	# thread_1.join()
-	# thread_2.join()
-
-	# print("done")
+	# print(formatters.parseIngredient(['2 ounces dry roasted cherries']))
+	res = queryAndStore(args['APIKey'], args['APIId'], args['Keyword'])
+	# print("postprocessed results", res)
 
 
 if __name__ == "__main__":
