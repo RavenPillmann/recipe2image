@@ -60,7 +60,7 @@ def convertAbbreviationsToUnits(line):
 	# TODO: Convert abbreviations to units
 	line_split = line.split(" ")
 	line_split_abbrs_to_units = [ABBRS_TO_UNITS[word] if (word in ABBRS_TO_UNITS) else word for word in line_split]
-	return " ".join(line_split_abbrs_to_units)
+	return " ".join(line_split_abbrs_to_units).lower()
 
 
 def preprocessLines(ingredient_lines):
