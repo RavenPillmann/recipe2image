@@ -9,3 +9,4 @@ Goal: Use a DCGAN to create images of recipes
 - [X] Get NYT ingredient parser working, process ingredient data
 - [] Run data collection, store in GCP
 - [] Build DCGAN to create images
+- [] Download images vs. hrefs?
