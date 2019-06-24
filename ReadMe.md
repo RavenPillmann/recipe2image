@@ -7,5 +7,5 @@ Goal: Use a DCGAN to create images of recipes
 ## TODO:
 - [ ] Write API query-er
 - [X] Get NYT ingredient parser working, process ingredient data
-- [] Run data collection, store in GCP
-- [] Build DCGAN to create images
+- [ ] Run data collection, store in GCP
+- [ ] Build DCGAN to create images
