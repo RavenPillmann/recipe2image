@@ -4,7 +4,6 @@
 This file is intended to hold formatting utilities, particularly for processing data
 """
 
-from ingredient_parser.en import parse
 from crf.scripts import parse_ingredients
 
 def parseIngredient(ingredient_string):

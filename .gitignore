@@ -1,3 +1,6 @@
 recipe2imageenv
 test.csv
 query_log.log
+run_query.py
+__pycache__
+*.csv

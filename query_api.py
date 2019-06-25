@@ -67,23 +67,14 @@ def postprocessData(data):
 	return: formatted json data
 	"""
 
-	# TODO: parse the ingredients, put parsed information into ingredients
 	json_data = json.loads(data)
 
-	# recipes_with_individual_ingredients = list(filter(lambda x: 'food' in x['recipe']['ingredients'][0], json_data['hits']))
 	for hit in json_data['hits']:
 		recipe = hit['recipe']
 
-		for ingredient in recipe['ingredients']:
-			if 'food' not in ingredient:
-				text = ingredient['text']
-
-				parsed_text = eval(formatters.parseIngredient([text]))[0]
-				# print("parsed_text", parsed_text)
-				ingredient['food'] = parsed_text.get('name')
-				ingredient['unit'] = parsed_text.get('unit')
-				ingredient['qty'] = parsed_text.get('qty')
-
+		ingredient_lines = recipe['ingredientLines']
+		parsed_ingredients = eval(formatters.parseIngredient(ingredient_lines))
+		recipe['ingredients'] = parsed_ingredients
 
 	return json_data
 
@@ -128,6 +119,16 @@ def query(api_key, api_id, keyword, from_num, to_num):
 	return recipes_with_individual_ingredients
 
 
+def getAndStoreData(api_key, api_id, keyword, from_num, to_num, output_file):
+	res = query(api_key, api_id, keyword, from_num, to_num)
+	
+	if len(res['hits']):
+		storeData(res, output_file)
+		return 1
+	else:
+		return 0
+
+
 def main():
 	parser = argparse.ArgumentParser(description="Query the EDAMAM recipe api.")
 
@@ -136,15 +137,12 @@ def main():
 	parser.add_argument('--keyword', '-k' , dest="Keyword")
 	parser.add_argument('--from', '-f', dest="FromNum", default=0)
 	parser.add_argument('--to', '-t', dest="ToNum", default=10)
+	parser.add_argument('--output_file', '-o', dest="OutputFile", default='test.csv')
 
 	args = parser.parse_args()
 	args = vars(args)
 
-	# print(formatters.parseIngredient(['2 ounces dry roasted cherries']))
-	res = query(args['APIKey'], args['APIId'], args['Keyword'], args['FromNum'], args['ToNum'])
-	# print("postprocessed results", res)
-
-	storeData(res, 'test.csv')
+	res = getAndStoreData(args['APIKey'], args['APIId'], args['Keyword'], args['FromNum'], args['ToNum'], args['OutputFile'])
 
 
 if __name__ == "__main__":
