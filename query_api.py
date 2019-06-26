@@ -26,7 +26,7 @@ def urlBuilder(api_key, api_id, keyword, from_num, to_num):
 
 	url += 'app_id=' + str(api_id) + '&'
 	url += 'app_key=' + str(api_key) + '&'
-	url += 'q=' + str(keyword) + '&'
+	url += 'q=' + str("%20".join(keyword.split(" "))) + '&'
 	url += 'from=' + str(from_num) + '&to=' + str(to_num)
 
 	return url
