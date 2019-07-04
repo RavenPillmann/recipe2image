@@ -12,7 +12,7 @@ def getNMostCommonIngredients(n):
 	most_common_ingredients = []
 	with open('counts/part-00000', 'r') as count_file:
 		item_count = 0
-		while item_count <= n:
+		while item_count < n:
 			ingredient_count_tuple = eval(count_file.readline())
 			ingredient_name = ingredient_count_tuple[0]
 			if ingredient_name != ' None' and ingredient_name != 'None':
