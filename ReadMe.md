@@ -8,4 +8,5 @@ Goal: Use a DCGAN to create images of recipes
 - [X] Write API query-er
 - [X] Get NYT ingredient parser working, process ingredient data
 - [X] Run data collection, store in GCP
-- [ ] Build DCGAN to create images
+- [X] Build conditional GAN to create images
+- [X] Serve with Flask and Docker
